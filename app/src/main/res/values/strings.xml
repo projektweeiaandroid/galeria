@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">sdcardgallery</string>
+    <string name="action_settings">Settings</string>
+    <string name="delete">DELETE</string>
+    <string-array
+        name="names">
+        <item>DELETE</item>
+    </string-array>
+</resources>
