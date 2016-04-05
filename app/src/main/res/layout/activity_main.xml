@@ -12,7 +12,7 @@
     <GridView
         android:id="@+id/gridView"
         android:layout_width="fill_parent"
-        android:layout_height="450dp"
+        android:layout_height="439dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:columnWidth="@dimen/photo_size"
@@ -27,13 +27,14 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="124dp"
         android:layout_height="wrap_content"
-        android:text="ZRÓB ZDJĘCIE"
+        android:text="APARAT"
         android:id="@+id/button2"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_gravity="center_horizontal|bottom"
+        android:textSize="25dp" />
 
 
 </FrameLayout>

@@ -1,8 +1,5 @@
 package com.example.mateusz.sdcardgallery;
 
-/**
- * Created by Mateusz on 07.01.2016.
- */
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;

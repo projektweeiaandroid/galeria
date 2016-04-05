@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <Button
-        android:id="@+id/dialogButtonYes"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="TAK"
-        android:layout_gravity="left|center_vertical" />
+    android:layout_height="fill_parent"
+    android:background="#000000">
 
     <Button
         android:id="@+id/dialogButtonNo"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="NIE"
-        android:layout_below="@+id/text"
+        android:layout_gravity="center_vertical"
+        android:textSize="25dp"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="right|center_vertical" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,7 +21,21 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Usunąć?"
         android:id="@+id/textView3"
-        android:layout_gravity="center" />
+        android:layout_gravity="center_vertical"
+        android:textSize="30dp"
+        android:textColor="#ffffff"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
+    <Button
+        android:id="@+id/dialogButtonYes"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="TAK"
+        android:layout_gravity="center_vertical"
+        android:textSize="25dp"
+        android:layout_alignTop="@+id/dialogButtonNo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-</FrameLayout>
+</RelativeLayout>

@@ -84,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
                             msg2.show();
                             adapter.notifyDataSetChanged();
                             gv.setAdapter(adapter);
-                            //finish();
-                            //startActivity(getIntent());
+
                         }
                         dialog.dismiss();
                     }
