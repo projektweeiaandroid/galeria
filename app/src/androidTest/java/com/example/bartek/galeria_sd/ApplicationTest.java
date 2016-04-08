@@ -1,4 +1,4 @@
-package com.example.mateusz.sdcardgallery;
+package com.example.bartek.galeria_sd;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

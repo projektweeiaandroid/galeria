@@ -7,7 +7,7 @@
     android:paddingRight="2dp"
     android:paddingTop="2dp"
     android:paddingBottom="2dp"
-    tools:context="com.example.mateusz.sdcardgallery.ViewImage"
+    tools:context="com.example.bartek.galeria_sd.ViewImage"
     android:background="#010101">
 
     <ImageView

@@ -1,4 +1,4 @@
-package com.example.mateusz.sdcardgallery;
+package com.example.bartek.galeria_sd;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,17 +11,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.ViewGroup.LayoutParams;
 
+
+import com.example.bartek.galeria_sd.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,16 +33,11 @@ public class MainActivity extends AppCompatActivity {
     final Context context = this;
     int i = 1;
     int k = 1;
-    //private int mPhotoSize, mPhotoSpacing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //mPhotoSize = getResources().getDimensionPixelSize(R.dimen.photo_size);
-        //mPhotoSpacing = getResources().getDimensionPixelSize(R.dimen.photo_spacing);
-
 
         b2 = (Button) findViewById(R.id.button2);
 
@@ -165,13 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            //convertView = getLayoutInflater().inflate(R.layout.single_grid, parent, false);
-            //ImageView iv = (ImageView) convertView.findViewById(R.id.imageView);
-           /* convertView = getLayoutInflater().inflate(R.layout.gridview_item, parent, false);
-            ImageView iv = (ImageView) convertView.findViewById(R.id.picture);
 
-            iv.setImageURI(Uri.parse(getItem(position).toString()));
-            return convertView;*/
             ViewHolder view_holder;
 
             if (convertView == null) {
@@ -186,14 +174,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             view_holder.img.setImageURI(Uri.parse(getItem(position).toString()));
-                    //setText(data[position]);
 
             return convertView;
 
         }
-
-
-
     }
 
     ArrayList<File> imageReader(File root){
