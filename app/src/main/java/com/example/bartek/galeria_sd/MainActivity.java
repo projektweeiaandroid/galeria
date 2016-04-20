@@ -1,11 +1,15 @@
 package com.example.bartek.galeria_sd;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -18,7 +22,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 import com.example.bartek.galeria_sd.R;
 
@@ -33,21 +39,30 @@ public class MainActivity extends AppCompatActivity {
     final Context context = this;
     int i = 1;
     int k = 1;
-
+ private static final int RESULT_PERMS_INITIAL=1339;
+    private static final String PREF_IS_FIRST_RUN="firstRun";
+    private SharedPreferences prefs;
+    private static final String[] PERMS_TAKE_PICTURE={
+            CAMERA,
+            WRITE_EXTERNAL_STORAGE
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        prefs= PreferenceManager.getDefaultSharedPreferences(this);
         b2 = (Button) findViewById(R.id.button2);
-
+        list = new ArrayList<File>();
         list = imageReader(Environment.getExternalStorageDirectory());
+
 
         gv = (GridView) findViewById(R.id.gridView);
 
         final GridAdapter adapter = new GridAdapter(this);
         gv.setAdapter(adapter);
-
+    if (isFirstRun() && useRuntimePermissions()) {
+            requestPermissions(PERMS_TAKE_PICTURE, RESULT_PERMS_INITIAL);
+        }
 
         gv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -110,7 +125,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    @TargetApi(Build.VERSION_CODES.M)
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults) {
+// TODO
+    }
+    private boolean useRuntimePermissions() {
+        return(Build.VERSION.SDK_INT> Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+    private boolean isFirstRun() {
+        boolean result=prefs.getBoolean(PREF_IS_FIRST_RUN, true);
+        if (result) {
+            prefs.edit().putBoolean(PREF_IS_FIRST_RUN, false).apply();
+        }
+        return(result);
+    }
     private void captureImage() {
 
         Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -184,6 +215,10 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<File> a = new ArrayList<>();
 
         File[] files = root.listFiles();
+        if (files == null) {
+            System.out.println("array is null");
+        }
+        else
         for(int i=0; i<files.length; i++){
             if(files[i].isDirectory()){
                 a.addAll( imageReader(files[i]));
