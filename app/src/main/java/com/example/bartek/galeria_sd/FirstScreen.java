@@ -14,15 +14,11 @@ import android.widget.TextView;
 
 import com.example.bartek.galeria_sd.R;
 
-
 public class FirstScreen extends AppCompatActivity implements View.OnClickListener {
 
     Button b1;
     TextView tv1;
     TextView tv2;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +31,7 @@ public class FirstScreen extends AppCompatActivity implements View.OnClickListen
 
         b1.setOnClickListener(this);
 
-
-
     }
-
-
     @Override
     public void onClick(View v) {
 

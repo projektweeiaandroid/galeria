@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,13 +24,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 import com.example.bartek.galeria_sd.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,12 +41,17 @@ public class MainActivity extends AppCompatActivity {
     final Context context = this;
     int i = 1;
     int k = 1;
- private static final int RESULT_PERMS_INITIAL=1339;
+    private static final int RESULT_PERMS_INITIAL=1339;
+    private static final int RESULT_PERMS_TAKE_PICTURE=1340;
     private static final String PREF_IS_FIRST_RUN="firstRun";
     private SharedPreferences prefs;
+    private static final String[] PERMS_INITIAL={
+            READ_EXTERNAL_STORAGE,
+
+    };
     private static final String[] PERMS_TAKE_PICTURE={
-            CAMERA,
-            WRITE_EXTERNAL_STORAGE
+            WRITE_EXTERNAL_STORAGE,
+            CAMERA
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         final GridAdapter adapter = new GridAdapter(this);
         gv.setAdapter(adapter);
     if (isFirstRun() && useRuntimePermissions()) {
-            requestPermissions(PERMS_TAKE_PICTURE, RESULT_PERMS_INITIAL);
+            requestPermissions(PERMS_INITIAL, RESULT_PERMS_INITIAL);
         }
 
         gv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -118,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 //finish();
                 //startActivity(getIntent());
                 //adapter.notifyDataSetChanged();
-                captureImage();
+
+                takePicture();
                 adapter.notifyDataSetChanged();
                 gv.setAdapter(adapter);
             }
@@ -132,9 +140,23 @@ public class MainActivity extends AppCompatActivity {
                                            int[] grantResults) {
 // TODO
     }
+
+    private boolean hasPermission(String perm) {
+        if (useRuntimePermissions()) {
+            return(checkSelfPermission(perm)== PackageManager.PERMISSION_GRANTED);
+        }
+        return(true);
+    }
+
+    private boolean canTakePicture() {
+        return(hasPermission(CAMERA) &&
+                hasPermission(WRITE_EXTERNAL_STORAGE));
+    }
+
     private boolean useRuntimePermissions() {
         return(Build.VERSION.SDK_INT> Build.VERSION_CODES.LOLLIPOP_MR1);
     }
+
     private boolean isFirstRun() {
         boolean result=prefs.getBoolean(PREF_IS_FIRST_RUN, true);
         if (result) {
@@ -142,6 +164,39 @@ public class MainActivity extends AppCompatActivity {
         }
         return(result);
     }
+    private String[] netPermissions(String[] wanted) {
+        ArrayList<String> result=new ArrayList<String>();
+        for (String perm : wanted) {
+            if (!hasPermission(perm)) {
+                result.add(perm);
+            }
+        }
+        return(result.toArray(new String[result.size()]));
+    }
+    public void takePicture() {
+        if (canTakePicture()) {
+            captureImage();
+        }
+        else {
+            requestPermissions(PERMS_TAKE_PICTURE,
+                    RESULT_PERMS_TAKE_PICTURE);
+           captureImage();
+        }
+    }
+
+    private boolean shouldShowRationale(String perm) {
+        if (useRuntimePermissions()) {
+            return(!hasPermission(perm) &&
+                    shouldShowRequestPermissionRationale(perm));
+        }
+        return(false);
+    }
+
+    private boolean shouldShowTakePictureRationale() {
+        return(shouldShowRationale(CAMERA) ||
+                shouldShowRationale(WRITE_EXTERNAL_STORAGE));
+    }
+
     private void captureImage() {
 
         Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -182,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
             return 0;
         }
 
-        private class ViewHolder { //przechowuje obiekty typu View dla zarzÄ…dzania danymi
+        private class ViewHolder { //przechowuje obiekty typu View dla zarzadzania danymi
             ImageView img;
         }
 
@@ -217,15 +272,16 @@ public class MainActivity extends AppCompatActivity {
         File[] files = root.listFiles();
         if (files == null) {
             System.out.println("array is null");
-        }
-        else
+        } else
         for(int i=0; i<files.length; i++){
             if(files[i].isDirectory()){
                 a.addAll( imageReader(files[i]));
+                Collections.reverse(a);
             }
             else {
                 if (files[i].getName().endsWith(".jpg")){
                     a.add(files[i]);
+                    Collections.reverse(a);
                 }
             }
         }
