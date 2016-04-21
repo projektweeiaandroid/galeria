@@ -138,7 +138,11 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions,
                                            int[] grantResults) {
-// TODO
+        if (requestCode==RESULT_PERMS_TAKE_PICTURE) {
+            if (canTakePicture()) {
+                takePicture();
+            }
+        }
     }
 
     private boolean hasPermission(String perm) {
@@ -165,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         return(result);
     }
     private String[] netPermissions(String[] wanted) {
-        ArrayList<String> result=new ArrayList<String>();
+        ArrayList<String> result=new ArrayList<>();
         for (String perm : wanted) {
             if (!hasPermission(perm)) {
                 result.add(perm);
@@ -177,9 +181,11 @@ public class MainActivity extends AppCompatActivity {
         if (canTakePicture()) {
             captureImage();
         }
+        else if (shouldShowTakePictureRationale()) {
+        }
         else {
-            requestPermissions(PERMS_TAKE_PICTURE,
-                    RESULT_PERMS_TAKE_PICTURE);
+            requestPermissions(netPermissions(PERMS_TAKE_PICTURE),
+                    RESULT_PERMS_TAKE_PICTURE);;
            captureImage();
         }
     }
