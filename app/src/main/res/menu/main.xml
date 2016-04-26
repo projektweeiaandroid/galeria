@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.damianchodorek.kurs.android8.MainActivity" >
+
+    <item
+        android:id="@+id/action_add"
+        android:icon="@android:drawable/btn_star"
+        android:orderInCategory="100"
+        android:title="Dodaj do ulubionych"/>
+    <item
+        android:id="@+id/action_settings"
+        android:title="Ustawienia">
+    </item>
+
+</menu>

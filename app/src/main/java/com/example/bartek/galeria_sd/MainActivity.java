@@ -13,7 +13,10 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -47,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private static final String[] PERMS_INITIAL={
             READ_EXTERNAL_STORAGE,
-
     };
     private static final String[] PERMS_TAKE_PICTURE={
             WRITE_EXTERNAL_STORAGE,
@@ -61,13 +63,15 @@ public class MainActivity extends AppCompatActivity {
         b2 = (Button) findViewById(R.id.button2);
         list = new ArrayList<File>();
         list = imageReader(Environment.getExternalStorageDirectory());
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
 
         gv = (GridView) findViewById(R.id.gridView);
 
         final GridAdapter adapter = new GridAdapter(this);
         gv.setAdapter(adapter);
-    if (isFirstRun() && useRuntimePermissions()) {
+     if (isFirstRun() && useRuntimePermissions()) {
             requestPermissions(PERMS_INITIAL, RESULT_PERMS_INITIAL);
         }
 
@@ -132,6 +136,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        // zareaguj na podstawie ID itemu
+        switch (item.getItemId()) {
+
+            case R.id.action_add:
+                Toast.makeText(this, "Wybrano: Dodaj do ulubionych",
+                        Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.action_settings:
+                Toast.makeText(this, "Wybrano: Ustawienia", Toast.LENGTH_SHORT)
+                        .show();
+                break;
+
+            default:
+                break;
+        }
+
+        return true;
     }
     @Override
     @TargetApi(Build.VERSION_CODES.M)
