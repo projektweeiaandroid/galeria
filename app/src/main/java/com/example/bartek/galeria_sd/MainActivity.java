@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -149,14 +150,17 @@ public class MainActivity extends AppCompatActivity {
         // zareaguj na podstawie ID itemu
         switch (item.getItemId()) {
 
-            case R.id.action_add:
-                Toast.makeText(this, "Wybrano: Dodaj do ulubionych",
-                        Toast.LENGTH_SHORT).show();
+            case R.id.ustawienia:
+               Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+                intent.setData(uri);
+                context.startActivity(intent);
                 break;
 
-            case R.id.action_settings:
-                Toast.makeText(this, "Wybrano: Ustawienia", Toast.LENGTH_SHORT)
-                        .show();
+            case R.id.exit:
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
                 break;
 
             default:

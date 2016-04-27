@@ -33,7 +33,7 @@
         android:background="#ffffff" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:text="APARAT"

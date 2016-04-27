@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="(c) Bartłomiej Gałązka, Mateusz Wołowski"
+        android:text="(c) Bartłomiej Gałązka"
         android:id="@+id/textView2"
         android:layout_column="1"
         android:textAlignment="center"
@@ -30,7 +30,7 @@
     <Button
         android:layout_width="236dp"
         android:layout_height="86dp"
-        android:text="Przejdź do galerii"
+        android:text="Otwórz galerię"
         android:id="@+id/button"
         android:layout_column="0"
         android:layout_span="3"
