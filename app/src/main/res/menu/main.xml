@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.damianchodorek.kurs.android8.MainActivity" >
-
-    <item
-        android:id="@+id/ustawienia"
-        android:icon="@android:drawable/btn_star"
-        android:title="Ustawienia aplikacji"/>
-    <item
-        android:id="@+id/exit"
-        android:title="Wyjście do głównego menu">
-    </item>
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/siatka"
+        android:title="@string/siatka"
+        android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/ustawienia"
+        android:title="@string/ustawienia"
+        android:showAsAction="ifRoom|withText" />
 </menu>

@@ -1,5 +1,41 @@
 package com.example.bartek.galeria_sd;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.SearchManager;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.TextView;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
@@ -21,16 +57,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import com.example.bartek.galeria_sd.R;
 
 import java.io.File;
@@ -38,6 +78,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
+
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    private String[] mItemTitles;
+
 
     GridView gv;
     ArrayList<File> list;
@@ -60,6 +109,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mTitle = mDrawerTitle = getTitle();
+        mItemTitles = getResources().getStringArray(R.array.drawer_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // set up the drawer's list view with items and click listener
+        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mItemTitles));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        mDrawerToggle = new android.support.v7.app.ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                getSupportActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getSupportActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        if (savedInstanceState == null) {
+            selectItem(0);
+        }
+
         prefs= PreferenceManager.getDefaultSharedPreferences(this);
         b2 = (Button) findViewById(R.id.button2);
         list = new ArrayList<File>();
@@ -141,34 +221,90 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    /* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.ustawienia).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle action buttons
+        switch(item.getItemId()) {
+            case R.id.siatka:
+                Toast.makeText(this, "Wybrano: Zmień układ siatki",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.ustawienia:
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+                intent.setData(uri);
+                context.startActivity(intent);
+            break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
         return true;
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
-        // zareaguj na podstawie ID itemu
-        switch (item.getItemId()) {
+    /* The click listner for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
 
-            case R.id.ustawienia:
-               Intent intent = new Intent();
+    private void selectItem(int position) {
+        switch(position) {
+            case 0:
+                Toast.makeText(this, "Wybrano: Zmień układ siatki",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                 Uri uri = Uri.fromParts("package", context.getPackageName(), null);
                 intent.setData(uri);
                 context.startActivity(intent);
                 break;
 
-            case R.id.exit:
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
-                break;
-
             default:
-                break;
         }
-
-        return true;
     }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setTitle(mTitle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
     @Override
     @TargetApi(Build.VERSION_CODES.M)
     public void onRequestPermissionsResult(int requestCode,
