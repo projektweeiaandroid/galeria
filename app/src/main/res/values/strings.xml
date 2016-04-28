@@ -13,6 +13,7 @@
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+
     <string name="siatka">Ustawienia siatki</string>
     <string name="ustawienia">Ustawienia pozwoleń</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
