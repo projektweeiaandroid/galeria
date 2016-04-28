@@ -21,5 +21,7 @@
     <item android:id="@+id/ustawienia"
         android:title="@string/ustawienia"
         android:showAsAction="ifRoom|withText" />
-
+    <item android:id="@+id/exit"
+        android:title="@string/exit"
+        android:showAsAction="ifRoom|withText" />
 </menu>

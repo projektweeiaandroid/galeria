@@ -175,6 +175,10 @@ public class FirstScreen extends AppCompatActivity implements View.OnClickListen
                 intent.setData(uri);
                 context.startActivity(intent);
             break;
+            case R.id.exit:
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -202,6 +206,10 @@ public class FirstScreen extends AppCompatActivity implements View.OnClickListen
                 intent.setData(uri);
                 context.startActivity(intent);
                 break;
+            case 2:
+                android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+            break;
 
             default:
         }
