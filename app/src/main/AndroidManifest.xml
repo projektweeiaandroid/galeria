@@ -22,6 +22,10 @@
         </activity>
         <activity android:name="com.example.bartek.galeria_sd.ViewImage" >
         </activity>
+        <activity android:name="com.example.bartek.galeria_sd.Jedna" >
+        </activity>
+        <activity android:name=".Trzy" >
+        </activity>
         <activity android:name="com.example.bartek.galeria_sd.FirstScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

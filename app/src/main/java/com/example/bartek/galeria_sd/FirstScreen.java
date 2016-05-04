@@ -165,8 +165,8 @@ public class FirstScreen extends AppCompatActivity implements View.OnClickListen
         switch(item.getItemId()) {
 
             case R.id.siatka:
-                Toast.makeText(this, "Wybrano: Zmień układ siatki",
-                        Toast.LENGTH_SHORT).show();
+                Intent start_jedna = new Intent(FirstScreen.this, Jedna.class);
+                startActivity(start_jedna);
                 break;
             case R.id.ustawienia:
                 Intent intent = new Intent();
@@ -196,17 +196,25 @@ public class FirstScreen extends AppCompatActivity implements View.OnClickListen
     private void selectItem(int position) {
         switch(position) {
             case 0:
-                Toast.makeText(this, "Wybrano: Zmień układ siatki",
-                        Toast.LENGTH_SHORT).show();
+                Intent start_jedna = new Intent(FirstScreen.this, Jedna.class);
+                startActivity(start_jedna);
                 break;
             case 1:
+                Intent start_trzy = new Intent(FirstScreen.this, Trzy.class);
+                startActivity(start_trzy);
+                break;
+            case 2:
+                Intent start_def = new Intent(FirstScreen.this, MainActivity.class);
+                startActivity(start_def);
+                break;
+            case 3:
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                 Uri uri = Uri.fromParts("package", context.getPackageName(), null);
                 intent.setData(uri);
                 context.startActivity(intent);
                 break;
-            case 2:
+            case 4:
                 android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
             break;

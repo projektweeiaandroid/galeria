@@ -7,14 +7,18 @@
         <item>DELETE</item>
     </string-array>
     <string-array name="drawer_array">
-        <item>Zmień układ siatki</item>
+        <item>Zmień układ siatki - 1 kolumna</item>
+        <item>Zmień układ siatki - 3 kolumny</item>
+        <item>Zmień układ siatki - auto</item>
         <item>Ustawienia aplikacji</item>
         <item>Zamknij aplikację</item>
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="exit">Zamknij aplikację</string>
-    <string name="siatka">Ustawienia siatki</string>
+    <string name="siatka">Ustawienia siatki - 1 kol.</string>
+    <string name="siatka2">Ustawienia siatki - 3 kol.</string>
+    <string name="siatka3">Ustawienia siatki - default</string>
     <string name="ustawienia">Ustawienia pozwoleń</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
 </resources>

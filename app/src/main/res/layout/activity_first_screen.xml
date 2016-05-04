@@ -8,6 +8,16 @@
     tools:context="com.example.bartek.galeria_sd.FirstScreen"
     android:background="#a6adc9">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="(c) Bartłomiej Gałązka"
+        android:id="@+id/textView2"
+        android:layout_column="1"
+        android:textAlignment="center"
+        android:layout_gravity="center_horizontal|top" />
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
@@ -33,31 +43,24 @@
             android:dividerHeight="0dp"
             android:background="#9b9393"/>
     </android.support.v4.widget.DrawerLayout>
-    <Button
-        android:layout_width="236dp"
-        android:layout_height="86dp"
-        android:text="Otwórz galerię"
-        android:id="@+id/button"
-        android:layout_column="0"
-        android:layout_span="3"
-        android:background="#ffffff"
-        android:layout_gravity="center"
-        android:textSize="20dp" />
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="(c) Bartłomiej Gałązka"
-        android:id="@+id/textView2"
-        android:layout_column="1"
-        android:textAlignment="center"
-        android:layout_gravity="center_horizontal|bottom" />
-
 
 
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_gravity="center_horizontal|bottom" >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="86dp"
+            android:text="Otwórz galerię"
+            android:id="@+id/button"
+            android:layout_column="0"
+            android:layout_span="3"
+            android:background="#ffffff"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textSize="20dp" />
+
+    </FrameLayout>
 </FrameLayout>
