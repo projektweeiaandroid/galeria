@@ -198,14 +198,17 @@ public class FirstScreen extends AppCompatActivity implements View.OnClickListen
             case 0:
                 Intent start_jedna = new Intent(FirstScreen.this, Jedna.class);
                 startActivity(start_jedna);
+                mDrawerLayout.closeDrawer(mDrawerList);
                 break;
             case 1:
                 Intent start_trzy = new Intent(FirstScreen.this, Trzy.class);
                 startActivity(start_trzy);
+                mDrawerLayout.closeDrawer(mDrawerList);
                 break;
             case 2:
                 Intent start_def = new Intent(FirstScreen.this, MainActivity.class);
                 startActivity(start_def);
+                mDrawerLayout.closeDrawer(mDrawerList);
                 break;
             case 3:
                 Intent intent = new Intent();
@@ -213,10 +216,11 @@ public class FirstScreen extends AppCompatActivity implements View.OnClickListen
                 Uri uri = Uri.fromParts("package", context.getPackageName(), null);
                 intent.setData(uri);
                 context.startActivity(intent);
+                mDrawerLayout.closeDrawer(mDrawerList);
                 break;
             case 4:
                 android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
+            //System.exit(1);
             break;
 
             default:
